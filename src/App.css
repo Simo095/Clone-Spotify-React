@@ -1,0 +1,280 @@
+body {
+  background: rgb(46, 63, 87);
+  background: linear-gradient(90deg, rgb(63, 86, 119) 0%, rgba(33, 44, 61, 1) 42%, rgb(15, 21, 29) 100%);
+  color: white !important;
+}
+
+/*SIDEBAR SECTION*/
+.navbar.fixed-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 230px;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  background-color: black;
+  z-index: 1200;
+}
+
+.nav-item {
+  text-decoration: none !important;
+  color: rgb(145, 145, 145) !important;
+  transition: 0.3s;
+}
+.btn-mio {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  background-color: #00000000;
+}
+.form-mio {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.navbar.fixed-left .navbar-collapse .navbar-nav a:hover {
+  color: white !important;
+}
+
+.navbar.fixed-left .navbar-brand {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+}
+
+.nav-btn {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.nav-btn a {
+  color: rgb(145, 145, 145);
+}
+
+.signup-btn {
+  background-color: white;
+  color: black;
+  border: 1px solid white;
+  border-radius: 20px;
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+.signup-btn:hover {
+  color: white;
+  background-color: rgb(60, 211, 60);
+  border: 1px solid rgb(60, 211, 60);
+}
+
+.login-btn {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+.login-btn:hover {
+  color: black;
+  background-color: white;
+}
+
+@media screen and (max-width: 1000px) {
+  #sidebar {
+    display: none;
+  }
+}
+
+/* BOTTOM PLAYER SECTION*/
+
+.bg-container {
+  height: 5.5rem;
+  background-color: #282828;
+}
+
+.playerControls {
+  display: flex;
+  justify-content: center;
+}
+
+.playerControls img {
+  width: 14px;
+  height: 14px;
+  filter: brightness(60%);
+}
+
+.playerControls a:hover {
+  filter: brightness(80%);
+  color: #282828 !important;
+}
+.titlePlayer {
+  font-size: 0.8em;
+  flex-grow: 1;
+  margin: 0;
+  width: 100%;
+}
+
+.imgPlay {
+  flex-shrink: 0;
+}
+
+/*MAIN PAGE SECTION*/
+
+.mainLinks {
+  margin-top: 1.5rem;
+  justify-content: space-evenly;
+}
+
+.mainLinks a {
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  opacity: 0.3;
+  text-decoration: none;
+}
+
+.mainLinks a:hover {
+  text-decoration: none;
+  opacity: 1;
+  transition: 0.3s;
+}
+.mainPage {
+  height: 85vh;
+  overflow-y: scroll;
+}
+.mainPage::-webkit-scrollbar {
+  color: rgba(0, 0, 0, 0);
+}
+.imgLinks a,
+.mainPage p a {
+  text-decoration: none;
+  padding-top: 8px;
+  font-size: 12px;
+  color: white;
+  font-weight: 700;
+}
+
+.mainPage p a:hover {
+  color: rgb(138, 138, 138);
+}
+
+.imgLinks a:hover {
+  text-decoration: none;
+}
+
+.imgLinks a img:hover {
+  filter: brightness(50%);
+}
+
+#rock,
+#pop,
+#hiphop,
+#searchResults,
+#artist-tracks {
+  color: white;
+  font-weight: 700;
+  padding-top: 50px;
+}
+
+.trackHover:hover {
+  background-color: black;
+  cursor: pointer;
+  border-radius: 30px;
+  transform: scale(1.01);
+  transition: transform 0.8s;
+}
+
+.trackHover {
+  text-decoration: none;
+  max-width: 80%;
+  padding-top: 8px;
+  font-size: 12px;
+  color: white;
+  font-weight: 700;
+  padding-left: 3rem;
+  padding-bottom: 1em;
+}
+.menuSong {
+  overflow-y: scroll;
+  height: 73vh;
+}
+.menuSong::-webkit-scrollbar {
+  color: rgba(0, 0, 0, 0);
+}
+.trackHover div {
+  text-decoration: none;
+  padding-top: 8px;
+  font-size: 12px;
+  color: white;
+  font-weight: 700;
+  padding-left: 2em;
+  padding-bottom: 1em;
+}
+.trackHover small {
+  padding-right: 2em;
+}
+.icona {
+  font-size: 1.7em;
+  text-decoration: none;
+  color: whitesmoke;
+}
+.icona:hover {
+  transform: scale(1.1);
+}
+#btnPlay {
+  font-weight: 700;
+  width: 150px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+.duration {
+  float: right;
+}
+
+.mainButton {
+  border: 1px solid #fff !important;
+  border-radius: 20px !important;
+  height: 2.2em !important;
+  width: 7em;
+  text-align: center;
+  padding: 0px 10px !important;
+}
+
+.titleMain {
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+#hipHopSection {
+  margin-bottom: 7rem;
+}
+
+#followers {
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.album-title {
+  color: white;
+  font-weight: bold;
+  font-size: x-large;
+  margin-bottom: 0;
+}
+
+.artist-name {
+  color: #ffffff;
+}
+
+.mainPage img {
+  width: 200px;
+}
+.progressbar {
+  height: 16px;
+  background-color: grey;
+}
