@@ -1,4 +1,4 @@
-import { Col, Container, Form, Image, Placeholder, ProgressBar, Row } from "react-bootstrap";
+import { Col, Container, Image, Placeholder, ProgressBar, Row } from "react-bootstrap";
 import next from "../asset/Next.png";
 import pausea from "../asset/Pause.png";
 import previous from "../asset/Previous.png";
@@ -18,6 +18,7 @@ const Player = () => {
   const song = useSelector(state => state.song.song);
   const dispatch = useDispatch();
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [thumb, setThumb] = useState(false);
   const [screenX, setSreenX] = useState(0);
@@ -144,8 +145,9 @@ const Player = () => {
                     className="progressbar"
                     variant="light"
                     min={0}
-                    max={100}
+                    max={duration}
                     now={currentTime}
+                    draggable={false}
                     onClick={() => {}}
                     onMouseDown={async e => {
                       console.log("down", currentTime, "pageX", e.pageX, "  ", (e.pageX - screenX) * 0.407);
@@ -215,6 +217,9 @@ const Player = () => {
                   crossOrigin="anonymous"
                   onListen={e => {
                     setCurrentTime(e);
+                  }}
+                  onLoadedMetadata={() => {
+                    setDuration(playerRef.current.audioEl.current.duration);
                   }}
                   onAbort={() => {
                     setIsPlaying(false);
