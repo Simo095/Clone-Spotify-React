@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.3d8dc84b.css",
-    "main.js": "/static/js/main.b3e43aca.js",
-    "static/media/Spotify_Logo.png": "/static/media/Spotify_Logo.f48fb565509bf23854a8.png",
-    "static/media/Shuffle.png": "/static/media/Shuffle.be102ea43f6667d7d2d6.png",
-    "static/media/Repeat.png": "/static/media/Repeat.cd5686d59d1ee68b4ac6.png",
-    "static/media/Play.png": "/static/media/Play.c9919d1d2a43cb4afdfc.png",
-    "static/media/Previous.png": "/static/media/Previous.da4f6cf5753c2d9073fc.png",
-    "static/media/Next.png": "/static/media/Next.30395ebf2588c3a7c2d4.png",
-    "index.html": "/index.html",
-    "main.3d8dc84b.css.map": "/static/css/main.3d8dc84b.css.map",
-    "main.b3e43aca.js.map": "/static/js/main.b3e43aca.js.map"
+    "main.css": "/simo095.github.io/Clone-Spotify-React/static/css/main.3d8dc84b.css",
+    "main.js": "/simo095.github.io/Clone-Spotify-React/static/js/main.5eb5d686.js",
+    "static/media/Spotify_Logo.png": "/simo095.github.io/Clone-Spotify-React/static/media/Spotify_Logo.f48fb565509bf23854a8.png",
+    "static/media/Shuffle.png": "/simo095.github.io/Clone-Spotify-React/static/media/Shuffle.be102ea43f6667d7d2d6.png",
+    "static/media/Repeat.png": "/simo095.github.io/Clone-Spotify-React/static/media/Repeat.cd5686d59d1ee68b4ac6.png",
+    "static/media/Play.png": "/simo095.github.io/Clone-Spotify-React/static/media/Play.c9919d1d2a43cb4afdfc.png",
+    "static/media/Previous.png": "/simo095.github.io/Clone-Spotify-React/static/media/Previous.da4f6cf5753c2d9073fc.png",
+    "static/media/Next.png": "/simo095.github.io/Clone-Spotify-React/static/media/Next.30395ebf2588c3a7c2d4.png",
+    "index.html": "/simo095.github.io/Clone-Spotify-React/index.html",
+    "main.3d8dc84b.css.map": "/simo095.github.io/Clone-Spotify-React/static/css/main.3d8dc84b.css.map",
+    "main.5eb5d686.js.map": "/simo095.github.io/Clone-Spotify-React/static/js/main.5eb5d686.js.map"
   },
   "entrypoints": [
     "static/css/main.3d8dc84b.css",
-    "static/js/main.b3e43aca.js"
+    "static/js/main.5eb5d686.js"
   ]
 }
