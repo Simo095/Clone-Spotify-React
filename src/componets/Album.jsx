@@ -1,34 +1,28 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addFavoriteAction,
-  addPlayerAlbumAction,
-  addPlayerTrackAction,
-  removeFavoriteAction,
-  addSong
-} from "../redux/actions";
+
+import { useSelector } from "react-redux";
 import SingleTrack from "./SingleTrack";
 
 const Album = () => {
   const [album, setAlbum] = useState();
   const [track, setTrack] = useState(null);
-  const songFavorite = useSelector(state => state.favorite.idTraccia);
-  const dispatch = useDispatch();
+  const songFavorite = useSelector((state) => state.favorite.idTraccia);
   const params = useParams();
-  let headers = new Headers({
-    "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-    "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387"
-  });
 
   const albumFetch = async () => {
     try {
-      const risposta = await fetch("https://striveschool-api.herokuapp.com/api/deezer/album/" + params.id, {
-        method: "GET",
-        headers
-      });
+      const risposta = await fetch(
+        "https://striveschool-api.herokuapp.com/api/deezer/album/" + params.id,
+        {
+          method: "GET",
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2JhNGZjOThlY2E4ZTAwMTU4ODQzZTciLCJpYXQiOjE3NDAyNjMzNjksImV4cCI6MTc0MTQ3Mjk2OX0.2SSQilxWXdxZm14mkffH9bF7o_e3TUtxBTd8r3WA_n8",
+          },
+        }
+      );
       if (risposta.ok) {
         const album = await risposta.json();
         setAlbum(album);
@@ -48,9 +42,7 @@ const Album = () => {
   return (
     <Container fluid>
       <Row>
-        <Col
-          sm={8}
-          className="offset-md-3 mainPage mt-3">
+        <Col sm={8} className="offset-md-3 mainPage mt-3">
           <Row>
             <Col className="col-9 col-lg-11 mainLinks d-none d-md-flex">
               <Link>TRENDING</Link>
@@ -62,9 +54,7 @@ const Album = () => {
           </Row>
 
           <Row>
-            <Col
-              sm={3}
-              className="d-flex flex-column p-0 me-3">
+            <Col sm={3} className="d-flex flex-column p-0 me-3">
               {album ? (
                 <>
                   <Image
@@ -79,11 +69,9 @@ const Album = () => {
               ) : (
                 <Container
                   className="d-flex
-                h-100 align-items-center justify-content-center">
-                  <Spinner
-                    animation="border"
-                    variant="success"
-                    role="status">
+                h-100 align-items-center justify-content-center"
+                >
+                  <Spinner animation="border" variant="success" role="status">
                     <span className="visually-hidden">Loading...</span>
                   </Spinner>
                 </Container>
@@ -91,15 +79,14 @@ const Album = () => {
             </Col>
             <Col>
               <Row>
-                <Col
-                  sm={10}
-                  className="d-flex flex-column my-5 menuSong gap-2">
+                <Col sm={10} className="d-flex flex-column my-5 menuSong gap-2">
                   {track ? (
-                    track.data.map(track => (
+                    track.data.map((track) => (
                       <Row className="d-flex align-items-center justify-content-between ps-3 trackHover">
                         <SingleTrack
                           track={track}
-                          albumId={album.id}></SingleTrack>
+                          albumId={album.id}
+                        ></SingleTrack>
                       </Row>
                     ))
                   ) : (
@@ -107,7 +94,8 @@ const Album = () => {
                       <Spinner
                         animation="border"
                         variant="success"
-                        role="status">
+                        role="status"
+                      >
                         <span className="visually-hidden">Loading...</span>
                       </Spinner>
                     </Container>

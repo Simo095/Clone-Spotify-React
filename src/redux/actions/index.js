@@ -35,18 +35,16 @@ export const addAlbumSearch = (albumSearch) => ({
 });
 export const getPlayerAction = (IDAblumPassatoDaTraccia, idTracce) => {
   return async (dispatch) => {
-    let headers = new Headers({
-      "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-      "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
-    });
-
     try {
       const risposta = await fetch(
         "https://striveschool-api.herokuapp.com/api/deezer/album/" +
           IDAblumPassatoDaTraccia,
         {
           method: "GET",
-          headers,
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2JhNGZjOThlY2E4ZTAwMTU4ODQzZTciLCJpYXQiOjE3NDAyNjMzNjksImV4cCI6MTc0MTQ3Mjk2OX0.2SSQilxWXdxZm14mkffH9bF7o_e3TUtxBTd8r3WA_n8",
+          },
         }
       );
       if (risposta.ok) {

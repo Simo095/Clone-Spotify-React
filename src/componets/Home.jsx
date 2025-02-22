@@ -40,11 +40,6 @@ const Home = () => {
   const [rockSongInfo, setRockSongInfo] = useState([]);
   const [popSongInfo, setPopSongInfo] = useState([]);
   const [hiphopSongInfo, setHiphopSongInfo] = useState([]);
-  let headers = new Headers({
-    // sets the headers
-    "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-    "X-RapidAPI-Key": "9d408f0366mshab3b0fd8e5ecdf7p1b09f2jsne682a1797fa0",
-  });
 
   const handleArtist = async (artistName, setSetter) => {
     try {
@@ -53,7 +48,10 @@ const Home = () => {
           artistName,
         {
           method: "GET",
-          headers,
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2JhNGZjOThlY2E4ZTAwMTU4ODQzZTciLCJpYXQiOjE3NDAyNjMzNjksImV4cCI6MTc0MTQ3Mjk2OX0.2SSQilxWXdxZm14mkffH9bF7o_e3TUtxBTd8r3WA_n8",
+          },
         }
       );
       if (response.ok) {

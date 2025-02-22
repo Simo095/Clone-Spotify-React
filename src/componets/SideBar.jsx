@@ -1,4 +1,13 @@
-import { Button, Col, Container, Form, Image, Nav, Navbar, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Image,
+  Nav,
+  Navbar,
+  Row,
+} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../asset/Spotify_Logo.png";
 import { useState } from "react";
@@ -10,19 +19,19 @@ const SideBar = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(query, "query");
-
-    let headers = new Headers({
-      "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-      "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387"
-    });
     try {
-      const risposta = await fetch(" https://striveschool-api.herokuapp.com/api/deezer/search?q=" + query, {
-        method: "GET",
-        headers
-      });
+      const risposta = await fetch(
+        " https://striveschool-api.herokuapp.com/api/deezer/search?q=" + query,
+        {
+          method: "GET",
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2JhNGZjOThlY2E4ZTAwMTU4ODQzZTciLCJpYXQiOjE3NDAyNjMzNjksImV4cCI6MTc0MTQ3Mjk2OX0.2SSQilxWXdxZm14mkffH9bF7o_e3TUtxBTd8r3WA_n8",
+          },
+        }
+      );
       if (risposta.ok) {
         const album = await risposta.json();
         dispatch(addAlbumSearch(album));
@@ -34,14 +43,15 @@ const SideBar = () => {
       console.log(error);
     }
   };
-  const handleChange = e => {
+  const handleChange = (e) => {
     setQuery(e.target.value);
   };
   return (
     <Navbar
       id="sidebar"
       expand="md"
-      className="navbar-white bg-navbar fixed-left justify-content-between flex-grow-1">
+      className="navbar-white bg-navbar fixed-left justify-content-between flex-grow-1"
+    >
       <Container className="d-flex flex-column flex-grow-1 align-items-start m-2">
         <Link to={"/"}>
           <Image
@@ -53,27 +63,35 @@ const SideBar = () => {
           />
         </Link>
         <Nav className="mt-3 d-flex flex-column  gap-3">
-          <Link
-            className="nav-item"
-            to={"/"}>
+          <Link className="nav-item" to={"/"}>
             <Nav.Item>
-              <ImHome3 style={{ fontSize: "1.5em", margin: "3px", verticalAlign: "bottom" }}></ImHome3>Home
+              <ImHome3
+                style={{
+                  fontSize: "1.5em",
+                  margin: "3px",
+                  verticalAlign: "bottom",
+                }}
+              ></ImHome3>
+              Home
             </Nav.Item>
           </Link>
-          <Link
-            className="nav-item"
-            to={"/library"}>
+          <Link className="nav-item" to={"/library"}>
             <Nav.Item className="text-white">
-              <BsBookFill style={{ fontSize: "1.5em", margin: "3px", verticalAlign: "bottom" }}></BsBookFill>Library
+              <BsBookFill
+                style={{
+                  fontSize: "1.5em",
+                  margin: "3px",
+                  verticalAlign: "bottom",
+                }}
+              ></BsBookFill>
+              Library
             </Nav.Item>
           </Link>
         </Nav>
         <Nav className="mt-3 d-flex flex-column flex-grow-1 gap-3">
           <Form onSubmit={handleSubmit}>
             <Row>
-              <Col
-                xs="8"
-                className="p-0">
+              <Col xs="8" className="p-0">
                 <Form.Control
                   type="search"
                   value={query}
@@ -83,13 +101,8 @@ const SideBar = () => {
                   className="form-mio"
                 />
               </Col>
-              <Col
-                xs="3"
-                className="p-0">
-                <Button
-                  variant="secondary"
-                  className="btn-mio"
-                  type="submit">
+              <Col xs="3" className="p-0">
+                <Button variant="secondary" className="btn-mio" type="submit">
                   Go
                 </Button>
               </Col>
