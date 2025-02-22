@@ -15,27 +15,22 @@ function App() {
       <BrowserRouter>
         <SideBar></SideBar>
         <Routes>
-          <Route
-            path="/"
-            element={<Home></Home>}></Route>
-          <Route
-            path="/library"
-            element={<Library></Library>}></Route>
+          <Route path="/Clone-Spotify-React" element={<Home></Home>}></Route>
+          <Route path="/library" element={<Library></Library>}></Route>
           <Route
             path="/search"
-            element={<SearchResault></SearchResault>}></Route>
-          <Route
-            path="/search/albumPage/:id"
-            element={<Album></Album>}></Route>
-          <Route
-            path="/albumPage/:id/"
-            element={<Album></Album>}></Route>
+            element={<SearchResault></SearchResault>}
+          ></Route>
+          <Route path="/search/albumPage/:id" element={<Album></Album>}></Route>
+          <Route path="/albumPage/:id/" element={<Album></Album>}></Route>
           <Route
             path="/artistPage/:id/:artist/albumPage/:id"
-            element={<Album></Album>}></Route>
+            element={<Album></Album>}
+          ></Route>
           <Route
             path="/artistPage/:id/:artist/"
-            element={<Artist></Artist>}></Route>
+            element={<Artist></Artist>}
+          ></Route>
         </Routes>
         <Player></Player>
       </BrowserRouter>

@@ -7,34 +7,55 @@ export const ADD_SONG = "ADD_SONG";
 export const ADD_ALBUM = "ADD_ALBUM";
 export const ADD_ALBUM_SEARCH = "ADD_ALBUM_SEARCH";
 
-export const addFavoriteAction = idTrack => ({ type: ADD_FAVORITE, payload: idTrack });
-export const removeFavoriteAction = idTrack => ({ type: REMOVE_FAVORITE, payload: idTrack });
-export const addPlayerTrackAction = trackId => ({ type: ADD_PLAYER_TRACK, payload: trackId });
-export const addPlayerAlbumAction = albumId => ({ type: ADD_PLAYER_ALBUM, payload: albumId });
-export const getTracciAction = album => ({ type: ADD_PLAYER, payload: album });
-export const addSong = song => ({ type: ADD_SONG, payload: song });
-export const addAlbum = album => ({ type: ADD_ALBUM, payload: album });
-export const addAlbumSearch = albumSearch => ({ type: ADD_ALBUM_SEARCH, payload: albumSearch });
+export const addFavoriteAction = (idTrack) => ({
+  type: ADD_FAVORITE,
+  payload: idTrack,
+});
+export const removeFavoriteAction = (idTrack) => ({
+  type: REMOVE_FAVORITE,
+  payload: idTrack,
+});
+export const addPlayerTrackAction = (trackId) => ({
+  type: ADD_PLAYER_TRACK,
+  payload: trackId,
+});
+export const addPlayerAlbumAction = (albumId) => ({
+  type: ADD_PLAYER_ALBUM,
+  payload: albumId,
+});
+export const getTracciAction = (album) => ({
+  type: ADD_PLAYER,
+  payload: album,
+});
+export const addSong = (song) => ({ type: ADD_SONG, payload: song });
+export const addAlbum = (album) => ({ type: ADD_ALBUM, payload: album });
+export const addAlbumSearch = (albumSearch) => ({
+  type: ADD_ALBUM_SEARCH,
+  payload: albumSearch,
+});
 export const getPlayerAction = (IDAblumPassatoDaTraccia, idTracce) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let headers = new Headers({
       "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-      "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387"
+      "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
     });
 
     try {
       const risposta = await fetch(
-        "https://striveschool-api.herokuapp.com/api/deezer/album/" + IDAblumPassatoDaTraccia,
+        "https://striveschool-api.herokuapp.com/api/deezer/album/" +
+          IDAblumPassatoDaTraccia,
         {
           method: "GET",
-          headers
+          headers,
         }
       );
       if (risposta.ok) {
         const album = await risposta.json();
         console.log(album.tracks, "action");
 
-        const filter = album.tracks.data.filter(traccia => traccia.id === idTracce);
+        const filter = album.tracks.data.filter(
+          (traccia) => traccia.id === idTracce
+        );
         dispatch(getTracciAction(filter));
         dispatch(addAlbum(album.tracks));
       } else {
