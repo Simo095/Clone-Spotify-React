@@ -36,17 +36,19 @@ export const addAlbumSearch = (albumSearch) => ({
 export const getPlayerAction = (IDAblumPassatoDaTraccia, idTracce) => {
   return async (dispatch) => {
     try {
-      const risposta = await fetch(
-        "https://striveschool-api.herokuapp.com/api/deezer/album/" +
-          IDAblumPassatoDaTraccia,
-        {
-          method: "GET",
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2JhNGZjOThlY2E4ZTAwMTU4ODQzZTciLCJpYXQiOjE3NDAyNjMzNjksImV4cCI6MTc0MTQ3Mjk2OX0.2SSQilxWXdxZm14mkffH9bF7o_e3TUtxBTd8r3WA_n8",
-          },
-        }
-      );
+      const risposta =
+        IDAblumPassatoDaTraccia &&
+        (await fetch(
+          "https://striveschool-api.herokuapp.com/api/deezer/album/" +
+            IDAblumPassatoDaTraccia,
+          {
+            method: "GET",
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2JhNGZjOThlY2E4ZTAwMTU4ODQzZTciLCJpYXQiOjE3NDAyNjMzNjksImV4cCI6MTc0MTQ3Mjk2OX0.2SSQilxWXdxZm14mkffH9bF7o_e3TUtxBTd8r3WA_n8",
+            },
+          }
+        ));
       if (risposta.ok) {
         const album = await risposta.json();
         console.log(album.tracks, "action");

@@ -35,7 +35,7 @@ const SideBar = () => {
       if (risposta.ok) {
         const album = await risposta.json();
         dispatch(addAlbumSearch(album));
-        navigate("/search");
+        navigate("/Clone-Spotify-React/search");
       } else {
         console.log("Error");
       }
@@ -63,7 +63,7 @@ const SideBar = () => {
           />
         </Link>
         <Nav className="mt-3 d-flex flex-column  gap-3">
-          <Link className="nav-item" to={"/"}>
+          <Link className="nav-item" to={"/Clone-Spotify-React"}>
             <Nav.Item>
               <ImHome3
                 style={{
@@ -75,7 +75,7 @@ const SideBar = () => {
               Home
             </Nav.Item>
           </Link>
-          <Link className="nav-item" to={"/library"}>
+          <Link className="nav-item" to={"/Clone-Spotify-React/library"}>
             <Nav.Item className="text-white">
               <BsBookFill
                 style={{
