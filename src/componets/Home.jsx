@@ -109,7 +109,7 @@ const Home = () => {
 
   return (
     <>
-      <Container fluid>
+      <Container style={{maxWidth:"1000px"}} fluid>
         <Row className="">
           <Col className="offset-md-3 mainPage mt-3">
             <Row>
