@@ -6,7 +6,7 @@ const SearchResault = () => {
   const albumSearch = useSelector(state => state.song.albumSearch);
   return (
     <>
-      <Container fluid>
+      <Container style={{minWidth:"1000px"}} fluid>
         <Row>
           <Col
             sm={8}
