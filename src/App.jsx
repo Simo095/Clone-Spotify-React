@@ -8,40 +8,50 @@ import Album from "./componets/Album";
 import Artist from "./componets/Artist";
 import Library from "./componets/Library";
 import SearchResault from "./componets/SearchResault";
+import Headerbar from "./componets/Headerbar";
+import { useState } from "react";
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   return (
     <div className="App">
       <BrowserRouter>
-        <SideBar></SideBar>
+        <Headerbar />
+        <SideBar
+          setIsSidebarOpen={setIsSidebarOpen}
+          isSidebarOpen={isSidebarOpen}
+        />
         <Routes>
-          <Route path="/Clone-Spotify-React" element={<Home></Home>}></Route>
+          <Route
+            path="/Clone-Spotify-React"
+            element={<Home isSidebarOpen={isSidebarOpen} />}
+          ></Route>
           <Route
             path="/Clone-Spotify-React/library"
-            element={<Library></Library>}
+            element={<Library />}
           ></Route>
           <Route
             path="Clone-Spotify-React/search"
-            element={<SearchResault></SearchResault>}
+            element={<SearchResault />}
           ></Route>
           <Route
             path="/Clone-Spotify-React/search/albumPage/:id"
-            element={<Album></Album>}
+            element={<Album />}
           ></Route>
           <Route
             path="/Clone-Spotify-React/albumPage/:id/"
-            element={<Album></Album>}
+            element={<Album />}
           ></Route>
           <Route
             path="/Clone-Spotify-React/artistPage/:id/:artist/albumPage/:id"
-            element={<Album></Album>}
+            element={<Album />}
           ></Route>
           <Route
             path="/Clone-Spotify-React/artistPage/:id/:artist/"
-            element={<Artist></Artist>}
+            element={<Artist />}
           ></Route>
         </Routes>
-        <Player></Player>
+        <Player />
       </BrowserRouter>
     </div>
   );

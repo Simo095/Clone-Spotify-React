@@ -59,7 +59,7 @@ export const getPlayerAction = (IDAblumPassatoDaTraccia, idTracce) => {
         dispatch(getTracciAction(filter));
         dispatch(addAlbum(album.tracks));
       } else {
-        console.log("Error");
+        console.log("risposta", risposta);
       }
     } catch (error) {
       console.log(error);

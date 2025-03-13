@@ -15,7 +15,7 @@ import { ImHome3 } from "react-icons/im";
 import { BsBookFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { addAlbumSearch } from "../redux/actions";
-const SideBar = () => {
+const SideBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -46,77 +46,90 @@ const SideBar = () => {
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
+
+  const handleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   return (
-    <Navbar
-      id="sidebar"
-      expand="md"
-      className="navbar-white bg-navbar fixed-left justify-content-between flex-grow-1"
-    >
-      <Container className="d-flex flex-column flex-grow-1 align-items-start m-2">
-        <Link to={"/"}>
-          <Image
-            src={logo}
-            width={131}
-            height={40}
-            alt="Logo"
-            className="m-3"
-          />
-        </Link>
-        <Nav className="mt-3 d-flex flex-column  gap-3">
-          <Link className="nav-item" to={"/Clone-Spotify-React"}>
-            <Nav.Item>
-              <ImHome3
-                style={{
-                  fontSize: "1.5em",
-                  margin: "3px",
-                  verticalAlign: "bottom",
-                }}
-              ></ImHome3>
-              Home
-            </Nav.Item>
+    <>
+      <Navbar
+        id="sidebar"
+        expand="md"
+        className={`navbar-white bg-navbar fixed-left justify-content-between flex-grow-1 ${
+          isSidebarOpen ? "" : "d-none"
+        }`}
+      >
+        <Container className="d-flex flex-column flex-grow-1 align-items-start m-2">
+          <Link to={"/"}>
+            <Image
+              src={logo}
+              width={131}
+              height={40}
+              alt="Logo"
+              className="m-3"
+            />
           </Link>
-          <Link className="nav-item" to={"/Clone-Spotify-React/library"}>
-            <Nav.Item className="text-white">
-              <BsBookFill
-                style={{
-                  fontSize: "1.5em",
-                  margin: "3px",
-                  verticalAlign: "bottom",
-                }}
-              ></BsBookFill>
-              Library
-            </Nav.Item>
-          </Link>
-        </Nav>
-        <Nav className="mt-3 d-flex flex-column flex-grow-1 gap-3">
-          <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col xs="8" className="p-0">
-                <Form.Control
-                  type="search"
-                  value={query}
-                  onChange={handleChange}
-                  placeholder="Search"
-                  required
-                  className="form-mio"
+          <Nav className="mt-3 d-flex flex-column  gap-3">
+            <Link className="nav-item" to={"/Clone-Spotify-React"}>
+              <Nav.Item style={{ color: "white" }}>
+                <ImHome3
+                  style={{
+                    fontSize: "1.5em",
+                    margin: "3px",
+                    verticalAlign: "bottom",
+                  }}
+                ></ImHome3>
+                Home
+              </Nav.Item>
+            </Link>
+            <Link className="nav-item">
+              <Nav.Item>
+                <BsBookFill
+                  style={{
+                    fontSize: "1.5em",
+                    margin: "3px",
+                    verticalAlign: "bottom",
+                  }}
                 />
-              </Col>
-              <Col xs="3" className="p-0">
-                <Button variant="secondary" className="btn-mio" type="submit">
-                  Go
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Nav>
-        <Nav className="nav-btn me-auto d-flex flex-column">
-          <Button className="signup-btn">Sign Up</Button>
-          <Button className="login-btn">Logn</Button>
-          <Link>Cookie policy</Link>
-          <Link>Privacy</Link>
-        </Nav>
-      </Container>
-    </Navbar>
+                Library
+              </Nav.Item>
+            </Link>
+          </Nav>
+          <Nav className="mt-3 d-flex flex-column flex-grow-1 gap-3">
+            <Form onSubmit={handleSubmit}>
+              <Row>
+                <Col xs="8" className="p-0">
+                  <Form.Control
+                    type="search"
+                    value={query}
+                    onChange={handleChange}
+                    placeholder="Search"
+                    required
+                    className="form-mio"
+                  />
+                </Col>
+                <Col xs="3" className="p-0">
+                  <Button variant="secondary" className="btn-mio" type="submit">
+                    Go
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Nav>
+          <Nav className="nav-btn me-auto d-flex flex-column">
+            <Button className="signup-btn">Sign Up</Button>
+            <Button className="login-btn">Login</Button>
+            <Link>Cookie policy</Link>
+            <Link>Privacy</Link>
+          </Nav>
+        </Container>
+      </Navbar>
+      <div className="d-md-none">
+        <button onClick={handleSidebar}>
+          {isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+        </button>
+      </div>
+    </>
   );
 };
 export default SideBar;

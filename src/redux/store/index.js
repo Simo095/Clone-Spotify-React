@@ -11,19 +11,19 @@ const persistConfig = {
   blacklist: ["song"],
   transforms: [
     encryptTransform({
-      secretKey: process.env.REACT_APP_PERSIST_KEY
-    })
-  ]
+      secretKey: process.env.REACT_APP_PERSIST_KEY,
+    }),
+  ],
 };
 const mainReducers = combineReducers({
-  //Qui scriverai i reducer di cui hai bisogno
   favorite: favoriteReducer,
-  song: songReducer
+  song: songReducer,
 });
 const persistedReducer = persistReducer(persistConfig, mainReducers);
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false })
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export const persistor = persistStore(store);

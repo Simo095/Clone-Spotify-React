@@ -1,4 +1,12 @@
-import { Col, Container, Image, Placeholder, ProgressBar, Row } from "react-bootstrap";
+import {
+  Col,
+  Container,
+  Form,
+  Image,
+  Placeholder,
+  ProgressBar,
+  Row,
+} from "react-bootstrap";
 import next from "../asset/Next.png";
 import pausea from "../asset/Pause.png";
 import previous from "../asset/Previous.png";
@@ -6,141 +14,182 @@ import shuffle from "../asset/Shuffle.png";
 import playa from "../asset/Play.png";
 import repeat from "../asset/Repeat.png";
 import { useDispatch, useSelector } from "react-redux";
-import { addSong, getPlayerAction, addPlayerTrackAction } from "../redux/actions";
+import {
+  addSong,
+  getPlayerAction,
+  addPlayerTrackAction,
+} from "../redux/actions";
 import { useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 
 const Player = () => {
-  const idTracce = useSelector(state => state.song.idTraccia);
-  const idAlbum = useSelector(state => state.song.idAlbum);
-  const album = useSelector(state => state.song.album);
-  const tracciaFiltrata = useSelector(state => state.song.tracciaFiltrata);
-  const song = useSelector(state => state.song.song);
+  const idTracce = useSelector((state) => state.song.idTraccia);
+  const idAlbum = useSelector((state) => state.song.idAlbum);
+  const album = useSelector((state) => state.song.album);
+  const tracciaFiltrata = useSelector((state) => state.song.tracciaFiltrata);
+  const song = useSelector((state) => state.song.song);
   const dispatch = useDispatch();
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [thumb, setThumb] = useState(false);
   const [screenX, setSreenX] = useState(0);
-  const [screenY, setSreenY] = useState(0);
-  const playerRef = useRef([]);
+  const playerRef = useRef(null);
+  const [volume, setVolume] = useState(1);
 
   const playSong = () => {
-    if (isPlaying) {
+    if (isPlaying && playerRef.current) {
       playerRef.current.audioEl.current.pause();
-    } else {
+    } else if (playerRef.current) {
       playerRef.current.audioEl.current.play();
     }
   };
 
-  const forward = tracciaAttuale => {
-    album.data.filter((tracce, i) =>
-      tracce.id === tracciaAttuale
-        ? (dispatch(addSong(album.data[i + 1].preview)), dispatch(addPlayerTrackAction(album.data[i + 1].id)))
-        : console.log("ciao")
-    );
+  const forward = (tracciaAttuale) => {
+    if (album && album.data) {
+      album.data.filter((tracce, i) =>
+        tracce.id === tracciaAttuale && album.data[i + 1]
+          ? (dispatch(addSong(album.data[i + 1].preview)),
+            dispatch(addPlayerTrackAction(album.data[i + 1].id)))
+          : null
+      );
+    }
   };
-  const backward = tracciaAttuale => {
-    album.data.filter((tracce, i) =>
-      tracce.id === tracciaAttuale
-        ? (dispatch(addSong(album.data[i - 1].preview)), dispatch(addPlayerTrackAction(album.data[i - 1].id)))
-        : console.log("ciao")
-    );
+
+  const backward = (tracciaAttuale) => {
+    if (album && album.data) {
+      album.data.filter((tracce, i) =>
+        tracce.id === tracciaAttuale && album.data[i - 1]
+          ? (dispatch(addSong(album.data[i - 1].preview)),
+            dispatch(addPlayerTrackAction(album.data[i - 1].id)))
+          : null
+      );
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (playerRef.current && playerRef.current.audioEl.current) {
+      playerRef.current.audioEl.current.volume = newVolume;
+    }
   };
 
   useEffect(() => {
-    dispatch(getPlayerAction(idAlbum, idTracce));
-  }, [idAlbum, idTracce]);
+    if (idAlbum && idTracce) {
+      dispatch(getPlayerAction(idAlbum, idTracce));
+    }
+  }, [idAlbum, idTracce, dispatch]);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 580);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 580);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const renderPlayerContent = () => {
+    if (idTracce && tracciaFiltrata && tracciaFiltrata.length > 0) {
+      const track = tracciaFiltrata[0];
+      return (
+        <Container className="d-flex gap-4 p-0">
+          <Image
+            src={track.album.cover}
+            width={60}
+            height={60}
+            className="imgPlay"
+          />
+          <div>
+            <p className="titlePlayer">
+              {track.title.length < 20
+                ? track.title
+                : track.title.substring(0, 20)}
+            </p>
+            <p className="titlePlayer">
+              {track.album.title.length < 20
+                ? track.album.title
+                : track.album.title.substring(0, 20)}
+            </p>
+            <p className="titlePlayer">{track.artist.name}</p>
+          </div>
+        </Container>
+      );
+    } else {
+      return (
+        <Container fluid className="d-flex flex-column p-0 m-0">
+          <Placeholder as="div" animation="glow">
+            <Placeholder xs={3} style={{ width: "60px", height: "60px" }} />
+          </Placeholder>
+          <div>
+            <Placeholder as="p" animation="glow">
+              <Placeholder xs={8} />
+            </Placeholder>
+          </div>
+        </Container>
+      );
+    }
+  };
 
   return (
-    <Container
-      fluid
-      className="fixed-bottom bg-container pt-1">
-      <Row className="d-flex">
-        <Col sm={3}></Col>
-        <Col
-          sm={3}
-          className="p-0">
-          {idTracce ? (
-            tracciaFiltrata ? (
-              <Container className="d-flex gap-4 p-0">
-                <Image
-                  src={tracciaFiltrata[0].album.cover}
-                  width={60}
-                  height={60}
-                  className="imgPlay"
-                />
-                <div>
-                  <p className="titlePlayer">
-                    {tracciaFiltrata[0].title.lenght < 20
-                      ? tracciaFiltrata[0].title
-                      : tracciaFiltrata[0].title.substring(0, 20)}
-                  </p>
-                  <p className="titlePlayer">
-                    {tracciaFiltrata[0].album.title.lenght < 20
-                      ? tracciaFiltrata[0].album.title
-                      : tracciaFiltrata[0].album.title.substring(0, 20)}
-                  </p>
-                  <p className="titlePlayer">{tracciaFiltrata[0].artist.name}</p>
-                </div>
-              </Container>
-            ) : (
-              <Placeholder
-                as="p"
-                animation="glow">
-                <Placeholder xs={3} />
-              </Placeholder>
-            )
-          ) : (
-            <Placeholder
-              as="p"
-              animation="glow">
-              <Placeholder xs={3} />
-            </Placeholder>
-          )}
-        </Col>
-        <Col
-          sm={6}
-          className="playerControls">
-          <Row className="d-flex flex-column mx-auto flex-grow-1 mt-3">
-            <Col className="d-flex justify-content-start gap-3 ms-5 ps-4">
-              <Image src={shuffle} />
+    <Container fluid className="fixed-bottom bg-container pt-1">
+      {isSmallScreen ? (
+        <Row className="d-flex ">
+          <Col
+            xs={2}
+            className="d-flex justify-content-center align-items-center"
+          >
+            {renderPlayerContent()}
+          </Col>
+          <Col
+            xs={6}
+            className="d-flex flex-column justify-content-center align-items-center m-0 p-0"
+          >
+            <Container fluid className="m-0 p-0 d-flex justify-content-evenly">
+              <Image src={shuffle} style={{ width: "15px", height: "15px" }} />
               <Image
                 src={previous}
-                style={{ cursor: "pointer" }}
+                style={{ width: "15px", height: "15px", cursor: "pointer" }}
                 onClick={() => {
                   setIsPlaying(false);
-                  backward(tracciaFiltrata[0].id);
+                  if (tracciaFiltrata && tracciaFiltrata.length > 0) {
+                    backward(tracciaFiltrata[0].id);
+                  }
                 }}
               />
               {isPlaying ? (
                 <Image
                   src={pausea}
-                  style={{ cursor: "pointer" }}
+                  style={{ width: "15px", height: "15px", cursor: "pointer" }}
                   onClick={playSong}
                 />
               ) : (
                 <Image
                   src={playa}
-                  style={{ cursor: "pointer" }}
+                  style={{ width: "15px", height: "15px", cursor: "pointer" }}
                   onClick={playSong}
                 />
               )}
               <Image
                 src={next}
-                style={{ cursor: "pointer" }}
+                style={{ width: "15px", height: "15px", cursor: "pointer" }}
                 onClick={() => {
                   setIsPlaying(false);
-                  forward(tracciaFiltrata[0].id);
+                  if (tracciaFiltrata && tracciaFiltrata.length > 0) {
+                    forward(tracciaFiltrata[0].id);
+                  }
                 }}
               />
-              <Image src={repeat} />
-            </Col>
-            <Col>
-              <Row
-                className="justify-content-start playBar 
-              pt-3 pe-5 me-5">
-                <Col md={6}>
+              <Image src={repeat} style={{ width: "15px", height: "15px" }} />
+            </Container>
+            <Container className="mt-2">
+              <Row className="justify-content-center playBar">
+                <Col xs={10}>
                   <ProgressBar
                     className="progressbar"
                     variant="light"
@@ -149,77 +198,39 @@ const Player = () => {
                     now={currentTime}
                     draggable={false}
                     onClick={() => {}}
-                    onMouseDown={async e => {
-                      console.log("down", currentTime, "pageX", e.pageX, "  ", (e.pageX - screenX) * 0.407);
-                      console.log(e.pageX);
-                      let x = (e.pageX - screenX) * 0.407;
-                      setSreenX(e.pageX);
-                      setThumb(true);
-                      await setCurrentTime(currentTime - x);
+                    onMouseDown={async (e) => {
+                      if (playerRef.current) {
+                        let x = (e.pageX - screenX) * 0.407;
+                        setSreenX(e.pageX);
+                        setThumb(true);
+                        await setCurrentTime(currentTime - x);
+                      }
                     }}
-                    onMouseMove={e => {
+                    onMouseMove={(e) => {
                       if (thumb) {
-                        console.log("screnx", screenX);
-                        console.log("op", (e.pageX - screenX) * 0.407);
-                        console.log(currentTime);
                         setCurrentTime((e.pageX - screenX) * 0.407);
                       }
                     }}
-                    onMouseUp={e => {
+                    onMouseUp={() => {
                       if (thumb) {
                         setSreenX(0);
                         setThumb(false);
                       }
                     }}
-                    onInput={e => {
-                      console.log(e.target);
-                      //setCurrentTime(e.target.value);
-                      let value = e.target.value;
-                      e.target.style.background =
-                        "linear-gradient(to right, green 0%, green " +
-                        value +
-                        "%, #535353 " +
-                        value +
-                        "%, #535353 100%)";
-                    }}
                   />
                 </Col>
-                {/* <Form.Range
-                    min={0}
-                    max={100}
-                    value={currentTime}
-                    style={{ height: "20px" }}
-                    onInput={e => {
-                      console.log(e.target);
-                      setCurrentTime(e.target.value);
-                      let value = e.target.value;
-                      e.target.style.background =
-                        "linear-gradient(to right, green 0%, green " +
-                        value +
-                        "%, #535353 " +
-                        value +
-                        "%, #535353 100%)";
-                    }}
-                    onMouseLeave={e => {
-                      let value = e.target.value;
-                      e.target.style.background =
-                        "linear-gradient(to right, white 0%, white " +
-                        value +
-                        "%, #535353 " +
-                        value +
-                        "%, #535353 100%)";
-                    }}
-                  /> */}
                 <ReactAudioPlayer
                   src={song}
                   ref={playerRef}
                   listenInterval={50}
                   crossOrigin="anonymous"
-                  onListen={e => {
+                  onListen={(e) => {
                     setCurrentTime(e);
                   }}
                   onLoadedMetadata={() => {
-                    setDuration(playerRef.current.audioEl.current.duration);
+                    if (playerRef.current) {
+                      setDuration(playerRef.current.audioEl.current.duration);
+                    }
                   }}
                   onAbort={() => {
                     setIsPlaying(false);
@@ -237,33 +248,155 @@ const Player = () => {
                   }}
                 />
               </Row>
-            </Col>
-          </Row>
-          <p>Ciao</p>
-        </Col>
-      </Row>
+            </Container>
+          </Col>
+
+          <Col
+            xs={4}
+            className="d-flex justify-content-center align-items-center"
+          >
+            <Form.Range
+              value={volume}
+              min={0}
+              max={1}
+              step={0.01}
+              onChange={handleVolumeChange}
+              style={{ width: "80%" }}
+            />
+          </Col>
+        </Row>
+      ) : (
+        <Row className="d-flex">
+          <Col xs={0} sm={0} md={0} lg={3}></Col>
+          <Col sm={4} lg={3} className=" ms-4 ms-lg-0 p-0">
+            {renderPlayerContent()}
+          </Col>
+          <Col sm={5} lg={4} className="playerControls">
+            <Row className="d-flex flex-column mx-auto flex-grow-1 mt-3">
+              <Col className="d-flex justify-content-center gap-3">
+                <Image src={shuffle} />
+                <Image
+                  src={previous}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setIsPlaying(false);
+                    if (tracciaFiltrata && tracciaFiltrata.length > 0) {
+                      backward(tracciaFiltrata[0].id);
+                    }
+                  }}
+                />
+                {isPlaying ? (
+                  <Image
+                    src={pausea}
+                    style={{ cursor: "pointer" }}
+                    onClick={playSong}
+                  />
+                ) : (
+                  <Image
+                    src={playa}
+                    style={{ cursor: "pointer" }}
+                    onClick={playSong}
+                  />
+                )}
+                <Image
+                  src={next}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setIsPlaying(false);
+                    if (tracciaFiltrata && tracciaFiltrata.length > 0) {
+                      forward(tracciaFiltrata[0].id);
+                    }
+                  }}
+                />
+                <Image src={repeat} />
+              </Col>
+              <Col className="mt-2">
+                {" "}
+                {/* Aggiunto: mt-2 per il margine superiore */}
+                <Row className="justify-content-center playBar">
+                  {" "}
+                  {/* Modificato: justify-content-center */}
+                  <Col xs={12} md={8}>
+                    {" "}
+                    {/* Modificato: xs={12} e md={8} per il controllo della larghezza */}
+                    <ProgressBar
+                      className="progressbar"
+                      variant="light"
+                      min={0}
+                      max={duration}
+                      now={currentTime}
+                      draggable={false}
+                      onClick={() => {}}
+                      onMouseDown={async (e) => {
+                        if (playerRef.current) {
+                          let x = (e.pageX - screenX) * 0.407;
+                          setSreenX(e.pageX);
+                          setThumb(true);
+                          await setCurrentTime(currentTime - x);
+                        }
+                      }}
+                      onMouseMove={(e) => {
+                        if (thumb) {
+                          setCurrentTime((e.pageX - screenX) * 0.407);
+                        }
+                      }}
+                      onMouseUp={() => {
+                        if (thumb) {
+                          setSreenX(0);
+                          setThumb(false);
+                        }
+                      }}
+                    />
+                  </Col>
+                  <ReactAudioPlayer
+                    src={song}
+                    ref={playerRef}
+                    listenInterval={50}
+                    crossOrigin="anonymous"
+                    onListen={(e) => {
+                      setCurrentTime(e);
+                    }}
+                    onLoadedMetadata={() => {
+                      if (playerRef.current) {
+                        setDuration(playerRef.current.audioEl.current.duration);
+                      }
+                    }}
+                    onAbort={() => {
+                      setIsPlaying(false);
+                      setCurrentTime(0);
+                    }}
+                    onEnded={() => {
+                      setCurrentTime(0);
+                      setIsPlaying(false);
+                    }}
+                    onPlay={() => {
+                      setIsPlaying(true);
+                    }}
+                    onPause={() => {
+                      setIsPlaying(false);
+                    }}
+                  />
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+          <Col
+            sm={2}
+            lg={2}
+            className="d-flex align-items-center justify-content-center"
+          >
+            <Form.Range
+              value={volume}
+              min={0}
+              max={1}
+              step={0.01}
+              onChange={handleVolumeChange}
+            />
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };
+
 export default Player;
-
-// document.getElementById("range").oninput = function () {
-//   let value = ((this.value - this.min) / (this.max - this.min)) * 100;
-//   this.style.background =
-//     "linear-gradient(to right, green 0%, green " + value + "%, #535353 " + value + "%, #535353 100%)";
-
-//   document.getElementById("range").addEventListener("mouseleave", () => {
-//     value = ((this.value - this.min) / (this.max - this.min)) * 100;
-//     this.style.background =
-//       "linear-gradient(to right, white 0%, white " + value + "%, #535353 " + value + "%, #535353 100%)";
-//   });
-//   //manipolazione volume utente
-//   const player = document.querySelector("audio");
-//   const volumeSlider = document.querySelector("#range");
-
-//   volumeSlider.addEventListener("input", function () {
-//     let dato;
-//     dato = (this.value / 100).toFixed(1);
-//     player.volume = dato;
-//   });
-// };

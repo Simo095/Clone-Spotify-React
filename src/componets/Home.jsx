@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Home = ({ isSidebarOpen }) => {
   let rockArtists = [
     "queen",
     "u2",
@@ -108,110 +108,123 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      <Container style={{maxWidth:"1000px"}} fluid>
-        <Row className="">
-          <Col className="offset-md-3 mainPage mt-3">
-            <Row>
-              <Col className="col-9 col-lg-11 mainLinks d-none d-md-flex">
-                <Link>TRENDING</Link>
-                <Link>PODCAST</Link>
-                <Link>MOODS AND GENRES</Link>
-                <Link>NEW RELEASES</Link>
-                <Link>DISCOVER</Link>
-              </Col>
-            </Row>
+    <Container fluid className="text-center">
+      <Row className="">
+        <Col
+          md={isSidebarOpen ? 9 : 12}
+          className={`mainPage mt-3 ${isSidebarOpen ? "offset-md-3" : ""}`}
+        >
+          <Row>
+            <Col className="col-9 col-lg-11 mainLinks d-none d-md-flex">
+              <Link>TRENDING</Link>
+              <Link>PODCAST</Link>
+              <Link>MOODS AND GENRES</Link>
+              <Link>NEW RELEASES</Link>
+              <Link>DISCOVER</Link>
+            </Col>
+          </Row>
 
-            <h2 className="pt-5">Rock Classics</h2>
-            {rockSongInfo ? (
-              <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
-                {rockSongInfo.map((track) => (
-                  <Col key={track.id}>
-                    <Link to={`albumPage/${track.album.id}`}>
-                      <Image fluid src={track.album.cover_medium} />
-                      Album:
-                      {track.album.title}
-                      {/* {track.album.title.length < 16 ? track.album.title : track.album.title.substring(0, 16)} */}
+          <h2 className="pt-5">Rock Classics</h2>
+          {rockSongInfo ? (
+            <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
+              {rockSongInfo.map((track) => (
+                <Col key={track.id} className="d-flex flex-column">
+                  <Link to={`albumPage/${track.album.id}`} className="mb-2">
+                    <Image fluid src={track.album.cover_medium} />
+                  </Link>
+                  <div className="d-flex flex-column">
+                    <Link
+                      to={`albumPage/${track.album.id}`}
+                      className="text-truncate mb-1"
+                    >
+                      Album: {track.album.title}
                     </Link>
                     <Link
-                      className="d-block"
+                      className="text-truncate"
                       to={`artistPage/${track.artist.id}/${track.artist.name}`}
                     >
-                      Artist:
-                      {track.artist.name}
+                      Artist: {track.artist.name}
                     </Link>
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Container className="d-flex  justify-content-center">
-                <Spinner animation="border" variant="success" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </Container>
-            )}
-            <h2 className="pt-5">Pop Culture</h2>
-            {popSongInfo ? (
-              <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
-                {popSongInfo.map((track) => (
-                  <Col key={track.id}>
-                    <Link to={`albumPage/${track.album.id}`}>
-                      <Image fluid src={track.album.cover_medium} />
-                      Album:
-                      {track.album.title.length < 16
-                        ? track.album.title
-                        : track.album.title.substring(0, 16)}
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <Container className="d-flex justify-content-center">
+              <Spinner animation="border" variant="success" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </Container>
+          )}
+
+          <h2 className="pt-5">Pop Culture</h2>
+          {popSongInfo ? (
+            <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
+              {popSongInfo.map((track) => (
+                <Col key={track.id} className="d-flex flex-column">
+                  <Link to={`albumPage/${track.album.id}`} className="mb-2">
+                    <Image fluid src={track.album.cover_medium} />
+                  </Link>
+                  <div className="d-flex flex-column">
+                    <Link
+                      to={`albumPage/${track.album.id}`}
+                      className="text-truncate mb-1"
+                    >
+                      Album: {track.album.title}
                     </Link>
                     <Link
-                      className="d-block"
+                      className="text-truncate"
                       to={`artistPage/${track.artist.id}/${track.artist.name}`}
                     >
-                      Artist:
-                      {track.artist.name}
+                      Artist: {track.artist.name}
                     </Link>
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Container className="d-flex  justify-content-center">
-                <Spinner animation="border" variant="success" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </Container>
-            )}
-            <h2 className="pt-5">#HipHop</h2>
-            {hiphopSongInfo ? (
-              <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
-                {hiphopSongInfo.map((track) => (
-                  <Col key={track.id}>
-                    <Link to={`albumPage/${track.album.id}`}>
-                      <Image fluid src={track.album.cover_medium} />
-                      Album:
-                      {track.album.title.length < 16
-                        ? track.album.title
-                        : track.album.title.substring(0, 16)}
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <Container className="d-flex justify-content-center">
+              <Spinner animation="border" variant="success" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </Container>
+          )}
+
+          <h2 className="pt-5">#HipHop</h2>
+          {hiphopSongInfo ? (
+            <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3">
+              {hiphopSongInfo.map((track) => (
+                <Col key={track.id} className="d-flex flex-column">
+                  <Link to={`albumPage/${track.album.id}`} className="mb-2">
+                    <Image fluid src={track.album.cover_medium} />
+                  </Link>
+                  <div className="d-flex flex-column">
+                    <Link
+                      to={`albumPage/${track.album.id}`}
+                      className="text-truncate mb-1"
+                    >
+                      Album: {track.album.title}
                     </Link>
                     <Link
-                      className="d-block"
+                      className="text-truncate"
                       to={`artistPage/${track.artist.id}/${track.artist.name}`}
                     >
-                      Artist:
-                      {track.artist.name}
+                      Artist: {track.artist.name}
                     </Link>
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Container className="d-flex  justify-content-center">
-                <Spinner animation="border" variant="success" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </Container>
-            )}
-          </Col>
-        </Row>
-      </Container>
-    </>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <Container className="d-flex justify-content-center">
+              <Spinner animation="border" variant="success" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </Container>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 export default Home;
