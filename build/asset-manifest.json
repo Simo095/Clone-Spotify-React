@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Clone-Spotify-React/static/css/main.3d8dc84b.css",
-    "main.js": "/Clone-Spotify-React/static/js/main.9be46764.js",
+    "main.css": "/Clone-Spotify-React/static/css/main.2b39305f.css",
+    "main.js": "/Clone-Spotify-React/static/js/main.7cdea7e4.js",
     "static/media/Spotify_Logo.png": "/Clone-Spotify-React/static/media/Spotify_Logo.f48fb565509bf23854a8.png",
     "static/media/Shuffle.png": "/Clone-Spotify-React/static/media/Shuffle.be102ea43f6667d7d2d6.png",
     "static/media/Repeat.png": "/Clone-Spotify-React/static/media/Repeat.cd5686d59d1ee68b4ac6.png",
@@ -9,11 +9,11 @@
     "static/media/Previous.png": "/Clone-Spotify-React/static/media/Previous.da4f6cf5753c2d9073fc.png",
     "static/media/Next.png": "/Clone-Spotify-React/static/media/Next.30395ebf2588c3a7c2d4.png",
     "index.html": "/Clone-Spotify-React/index.html",
-    "main.3d8dc84b.css.map": "/Clone-Spotify-React/static/css/main.3d8dc84b.css.map",
-    "main.9be46764.js.map": "/Clone-Spotify-React/static/js/main.9be46764.js.map"
+    "main.2b39305f.css.map": "/Clone-Spotify-React/static/css/main.2b39305f.css.map",
+    "main.7cdea7e4.js.map": "/Clone-Spotify-React/static/js/main.7cdea7e4.js.map"
   },
   "entrypoints": [
-    "static/css/main.3d8dc84b.css",
-    "static/js/main.9be46764.js"
+    "static/css/main.2b39305f.css",
+    "static/js/main.7cdea7e4.js"
   ]
 }
